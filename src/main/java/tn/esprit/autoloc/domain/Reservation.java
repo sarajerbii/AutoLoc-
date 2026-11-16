@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,16 @@ public class Reservation {
 
     @Enumerated(EnumType.STRING)
     private StatutReservation statut;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
+
+    @OneToOne(mappedBy = "reservation")
+    private Contrat contrat;
+
 }

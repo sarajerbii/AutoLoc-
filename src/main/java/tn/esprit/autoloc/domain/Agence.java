@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Agence {
 
     @Id
@@ -22,4 +24,11 @@ public class Agence {
     private String ville;
     private String adresse;
     private String telephone;
+
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
+    private List<Employe> employes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
+    private List<Vehicule> vehicules = new ArrayList<>();
+
 }

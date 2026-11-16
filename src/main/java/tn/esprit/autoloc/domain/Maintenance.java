@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,8 @@ public class Maintenance {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private String description;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "vehicule_id")
+    private Vehicule vehicule;
 }

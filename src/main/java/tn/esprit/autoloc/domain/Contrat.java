@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import java.util.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +25,11 @@ public class Contrat {
     private LocalDate dateSignature;
     private BigDecimal montantTotal;
     private boolean valide;
+
+    @OneToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
+
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL)
+    private List<Paiement> paiements = new ArrayList<>();
 }
