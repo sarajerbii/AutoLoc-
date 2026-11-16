@@ -4,7 +4,7 @@ Plateforme de gestion de location de véhicules multi-agences — back-end Sprin
 
 > Projet fil rouge du cours **Architecture des Systèmes d'Information (ASI 26-27)** — ESPRIT.
 
-## 1. Acteurs et cas d'utilisation (Séance 1)
+## 1. Acteurs et cas d'utilisation
 
 Première liste identifiée à partir de l'étude de cas. Elle sera affinée au fil des ateliers.
 
