@@ -30,6 +30,8 @@ public class Contrat {
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
 
+
     @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL)
     private List<Paiement> paiements = new ArrayList<>();
+
 }
