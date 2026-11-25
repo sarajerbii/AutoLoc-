@@ -1,6 +1,7 @@
 package tn.esprit.autoloc.service;
 
 import java.util.List;
+import tn.esprit.autoloc.domain.Client;
 import tn.esprit.autoloc.domain.Reservation;
 
 public interface IReservationService {
@@ -9,4 +10,7 @@ public interface IReservationService {
     List<Reservation> findAll();
     Reservation update(Long id, Reservation reservation);
     void deleteById(Long id);
+
+    Reservation creerReservation(Client client);
+    Reservation annulerReservation(Reservation reservation);
 }
