@@ -57,4 +57,10 @@ public class ContratController {
     public PaiementDTO ajouterPaiement(@PathVariable Long contratId, @Valid @RequestBody PaiementDTO dto) {
         return contratService.ajouterPaiement(contratId, dto);
     }
+
+    @Operation(summary = "Contrats arrivant à échéance sous N jours")
+    @GetMapping("/echeance-proche")
+    public List<ContratDTO> echeanceProche(@RequestParam(defaultValue = "30") int jours) {
+        return contratService.contratsAEcheanceProche(jours);
+    }
 }

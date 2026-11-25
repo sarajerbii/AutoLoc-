@@ -49,4 +49,10 @@ public class AgenceController {
     public void deleteById(@PathVariable Long id) {
         agenceService.deleteById(id);
     }
+
+    @Operation(summary = "Agences d'une ville")
+    @GetMapping("/ville")
+    public List<AgenceDTO> findByVille(@RequestParam String ville) {
+        return agenceService.findByVille(ville);
+    }
 }

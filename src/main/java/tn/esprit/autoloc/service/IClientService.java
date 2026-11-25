@@ -9,4 +9,7 @@ public interface IClientService {
     List<ClientDTO> findAll();
     ClientDTO update(Long id, ClientDTO dto);
     void deleteById(Long id);
+    ClientDTO findByEmail(String email);
+
+    List<ClientDTO> findByNomContaining(String nom);
 }

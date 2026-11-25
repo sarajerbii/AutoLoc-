@@ -9,4 +9,6 @@ public interface IAgenceService {
     List<AgenceDTO> findAll();
     AgenceDTO update(Long id, AgenceDTO dto);
     void deleteById(Long id);
+
+    List<AgenceDTO> findByVille(String ville);
 }

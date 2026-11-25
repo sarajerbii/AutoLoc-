@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.domain.Client;
@@ -16,6 +17,7 @@ import tn.esprit.autoloc.repository.IVehiculeRepository;
 import tn.esprit.autoloc.service.observer.ReservationSubject;
 import tn.esprit.autoloc.web.dto.ReservationRequestDTO;
 import tn.esprit.autoloc.web.dto.ReservationResponseDTO;
+import tn.esprit.autoloc.web.dto.TopClientDTO;
 import tn.esprit.autoloc.web.mapper.ReservationMapper;
 
 @Slf4j
@@ -63,6 +65,18 @@ public class ReservationServiceImpl implements IReservationService {
             throw new ResourceNotFoundException("Reservation", id);
         }
         reservationRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReservationResponseDTO> findByStatut(StatutReservation statut) {
+        return reservationRepository.findByStatut(statut).stream().map(reservationMapper::toDto).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TopClientDTO> topClients(Pageable pageable) {
+        return reservationRepository.topClients(pageable);
     }
 
     /** Crée une réservation (démonstration Observer, Atelier 6) et notifie les observateurs. */

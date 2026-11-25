@@ -61,4 +61,10 @@ public class AgenceServiceImpl implements IAgenceService {
         return agenceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Agence", id));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AgenceDTO> findByVille(String ville) {
+        return agenceRepository.findByVille(ville).stream().map(agenceMapper::toDto).toList();
+    }
 }

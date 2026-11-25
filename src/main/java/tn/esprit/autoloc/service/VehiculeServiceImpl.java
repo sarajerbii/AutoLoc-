@@ -1,12 +1,16 @@
 package tn.esprit.autoloc.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.Vehicule;
+import tn.esprit.autoloc.domain.enums.CategorieVehicule;
 import tn.esprit.autoloc.domain.enums.StatutVehicule;
 import tn.esprit.autoloc.exception.ResourceNotFoundException;
 import tn.esprit.autoloc.repository.IAgenceRepository;
@@ -108,6 +112,31 @@ public class VehiculeServiceImpl implements IVehiculeService {
         BigDecimal tarif = dto.getTarifJournalier();
         if (tarif != null && tarif.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Le tarif journalier ne peut pas être négatif");
+
         }
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VehiculeDTO> findByAgenceVille(String ville) {
+        return vehiculeRepository.findByAgenceVille(ville).stream().map(vehiculeMapper::toDto).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VehiculeDTO> findByStatut(StatutVehicule statut, Pageable pageable) {
+        return vehiculeRepository.findByStatut(statut, pageable).map(vehiculeMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VehiculeDTO> rechercherDisponibles(String ville, CategorieVehicule categorie,
+                                                   LocalDate dateDebut, LocalDate dateFin) {
+        if (!dateFin.isAfter(dateDebut)) {
+            throw new IllegalArgumentException("La date de fin doit être postérieure à la date de début");
+        }
+        return vehiculeRepository.rechercherVehiculesDisponibles(ville, categorie, dateDebut, dateFin)
+                .stream().map(vehiculeMapper::toDto).toList();
+    }
+
 }

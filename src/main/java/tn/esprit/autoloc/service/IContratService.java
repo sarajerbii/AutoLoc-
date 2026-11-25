@@ -1,6 +1,8 @@
 package tn.esprit.autoloc.service;
 
 import java.util.List;
+
+import tn.esprit.autoloc.web.dto.ChiffreAffaireAgenceDTO;
 import tn.esprit.autoloc.web.dto.ContratDTO;
 import tn.esprit.autoloc.web.dto.PaiementDTO;
 
@@ -11,4 +13,8 @@ public interface IContratService {
     ContratDTO update(Long id, ContratDTO dto);
     void deleteById(Long id);
     PaiementDTO ajouterPaiement(Long contratId, PaiementDTO dto);
+
+    List<ChiffreAffaireAgenceDTO> chiffreAffaireParAgence();
+
+    List<ContratDTO> contratsAEcheanceProche(int jours);
 }

@@ -1,6 +1,7 @@
 package tn.esprit.autoloc.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import tn.esprit.autoloc.domain.Reservation;
 import tn.esprit.autoloc.exception.ResourceNotFoundException;
 import tn.esprit.autoloc.repository.IContratRepository;
 import tn.esprit.autoloc.repository.IReservationRepository;
+import tn.esprit.autoloc.web.dto.ChiffreAffaireAgenceDTO;
 import tn.esprit.autoloc.web.dto.ContratDTO;
 import tn.esprit.autoloc.web.dto.PaiementDTO;
 import tn.esprit.autoloc.web.mapper.ContratMapper;
@@ -104,5 +106,18 @@ public class ContratServiceImpl implements IContratService {
         if (montant != null && montant.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Le montant total ne peut pas être négatif");
         }
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ChiffreAffaireAgenceDTO> chiffreAffaireParAgence() {
+        return contratRepository.chiffreAffaireParAgence();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ContratDTO> contratsAEcheanceProche(int jours) {
+        LocalDate aujourdhui = LocalDate.now();
+        return contratRepository.trouverContratsAEcheanceProche(aujourdhui, aujourdhui.plusDays(jours))
+                .stream().map(contratMapper::toDto).toList();
     }
 }

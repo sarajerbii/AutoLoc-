@@ -12,4 +12,6 @@ public interface IEmployeService {
 
     void affecterEmployeAAgence(Long employeId, Long agenceId);
     void desaffecterEmployeDeAgence(Long employeId);
+
+    List<Employe> findByAgenceNom(String nomAgence);
 }

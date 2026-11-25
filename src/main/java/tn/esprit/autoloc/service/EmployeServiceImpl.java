@@ -2,8 +2,7 @@ package tn.esprit.autoloc.service;
 
 import java.util.List;
 
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.Employe;
@@ -84,5 +83,11 @@ public class EmployeServiceImpl implements IEmployeService {
         }
         employe.setAgence(null);
         employeRepository.save(employe);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Employe> findByAgenceNom(String nomAgence) {
+        return employeRepository.findByAgenceNom(nomAgence);
     }
 }

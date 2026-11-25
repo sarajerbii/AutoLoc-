@@ -77,4 +77,10 @@ public class EmployeController {
     public void desaffecter(@PathVariable Long employeId) {
         employeService.desaffecterEmployeDeAgence(employeId);
     }
+
+    @Operation(summary = "Employés d'une agence (par nom)")
+    @GetMapping("/agence")
+    public List<Employe> findByAgenceNom(@RequestParam String nomAgence) {
+        return employeService.findByAgenceNom(nomAgence);
+    }
 }

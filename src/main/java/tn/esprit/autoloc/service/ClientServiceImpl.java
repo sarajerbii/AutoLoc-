@@ -67,4 +67,18 @@ public class ClientServiceImpl implements IClientService {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client", id));
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ClientDTO findByEmail(String email) {
+        return clientRepository.findByEmail(email)
+                .map(clientMapper::toDto)
+                .orElseThrow(() -> new IllegalArgumentException("Aucun client avec l'email " + email));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ClientDTO> findByNomContaining(String nom) {
+        return clientRepository.findByNomContaining(nom).stream().map(clientMapper::toDto).toList();
+    }
 }

@@ -49,4 +49,16 @@ public class ClientController {
     public void deleteById(@PathVariable Long id) {
         clientService.deleteById(id);
     }
+
+    @Operation(summary = "Rechercher un client par email")
+    @GetMapping("/email")
+    public ClientDTO findByEmail(@RequestParam String email) {
+        return clientService.findByEmail(email);
+    }
+
+    @Operation(summary = "Rechercher des clients par nom")
+    @GetMapping("/recherche")
+    public List<ClientDTO> recherche(@RequestParam String nom) {
+        return clientService.findByNomContaining(nom);
+    }
 }

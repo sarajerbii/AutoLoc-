@@ -5,13 +5,18 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.autoloc.domain.enums.StatutReservation;
+import tn.esprit.autoloc.service.IContratService;
 import tn.esprit.autoloc.service.IReservationService;
+import tn.esprit.autoloc.web.dto.ChiffreAffaireAgenceDTO;
 import tn.esprit.autoloc.web.dto.ReservationRequestDTO;
 import tn.esprit.autoloc.web.dto.ReservationResponseDTO;
+import tn.esprit.autoloc.web.dto.TopClientDTO;
 import tn.esprit.autoloc.web.validator.ReservationRequestValidator;
 
 @RestController
@@ -19,7 +24,7 @@ import tn.esprit.autoloc.web.validator.ReservationRequestValidator;
 @RequiredArgsConstructor
 @Tag(name = "Réservations", description = "Gestion des réservations")
 public class ReservationController {
-
+    private final IContratService contratService;
     private final IReservationService reservationService;
     private final ReservationRequestValidator reservationRequestValidator;
 
@@ -68,5 +73,22 @@ public class ReservationController {
         return result.getFieldErrors().stream()
                 .map(e -> e.getField() + " : " + e.getDefaultMessage())
                 .toList();
+    }
+    @Operation(summary = "Réservations par statut")
+    @GetMapping("/statut")
+    public List<ReservationResponseDTO> findByStatut(@RequestParam StatutReservation statut) {
+        return reservationService.findByStatut(statut);
+    }
+
+    @Operation(summary = "Top clients par nombre de réservations")
+    @GetMapping("/top-clients")
+    public List<TopClientDTO> topClients(@RequestParam(defaultValue = "5") int limit) {
+        return reservationService.topClients(PageRequest.of(0, limit));
+    }
+
+    @Operation(summary = "Chiffre d'affaires par agence")
+    @GetMapping("/chiffre-affaires-agences")
+    public List<ChiffreAffaireAgenceDTO> chiffreAffaireParAgence() {
+        return contratService.chiffreAffaireParAgence();
     }
 }
