@@ -1,6 +1,8 @@
 package tn.esprit.autoloc.domain;
 
 import java.util.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Client {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClient;
