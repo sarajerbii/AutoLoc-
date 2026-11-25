@@ -1,14 +1,12 @@
 package tn.esprit.autoloc.web.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.autoloc.domain.Paiement;
 import tn.esprit.autoloc.service.IPaiementService;
+import tn.esprit.autoloc.web.dto.PaiementDTO;
 
 @RestController
 @RequestMapping("/paiements")
@@ -20,16 +18,13 @@ public class PaiementController {
 
     @Operation(summary = "Lister les paiements")
     @GetMapping
-    public List<Paiement> findAll() {
+    public List<PaiementDTO> findAll() {
         return paiementService.findAll();
     }
 
     @Operation(summary = "Consulter un paiement")
-
-            @ApiResponse(responseCode = "200", description = "Paiement trouvé")
-            @ApiResponse(responseCode = "404", description = "Paiement introuvable")
     @GetMapping("/{id}")
-    public Paiement findById(@PathVariable Long id) {
+    public PaiementDTO findById(@PathVariable Long id) {
         return paiementService.findById(id);
     }
 }
